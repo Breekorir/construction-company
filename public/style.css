@@ -38,6 +38,13 @@ nav {
   margin: 0 auto;
   padding: 0 2rem;
 }
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #fff;
+}
+
 
 .logo {
   font-size: 1.5rem;
@@ -78,6 +85,24 @@ nav ul li a:hover {
   color:#ccc;
   overflow: hidden;
   background-repeat: no-repeat;
+}
+.backdrop{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* behind the content */
+  width: 100%;
+  height: 100%;
+  background-image: url(images/hero-section.jpeg);
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* behind the content */
+}
+.new img{
+  width: 20px;
+  height: 10px;
 }
 
 .hero h1 {
@@ -196,15 +221,15 @@ nav ul li a:hover {
   color: #f7941d;
 }
 
-#contact-form {
+#contactForm {
   display: flex;
   flex-direction: column;
   max-width: 600px;
   margin: 0 auto;
 }
 
-#contact-form input,
-#contact-form textarea {
+#contactForm input,
+#contactForm textarea {
   padding: 1rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -212,11 +237,11 @@ nav ul li a:hover {
   font-size: 1rem;
 }
 
-#contact-form textarea {
+#contactForm textarea {
   height: 150px;
 }
 
-#contact-form button {
+#contactForm button {
   padding: 1rem;
   background:#f7941d;
   border: none;
@@ -229,14 +254,69 @@ nav ul li a:hover {
 
 #contact-form button:hover {
   background: #d89e00;
+}.footer {
+  background: #222;
+  color: #eee;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 1rem 0;
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
+
+.footer-section {
+  flex: 1 1 250px;
+  min-width: 250px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-section p,
+.footer-section li,
+.footer-section a {
+  font-size: 14px;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  color: #f4c542;
+}
+
+.social-links a {
+  display: block;
+  margin: 5px 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .footer-section {
+    text-align: center;
+  }
+}
+
 
 .project-grid {
   display: grid;
@@ -302,35 +382,100 @@ footer {
 .project-grid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+/* --- MOBILE VIEW --- */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    background: #2e3192;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    display: none;
+  }
 
-/* Scroll Button Style */
-.scroll-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 12px 16px;
-  font-size: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: 0.3s ease;
-  z-index: 10;
-}
+  .project-card {
+    min-width: 250px; /* smaller card width for mobile */
+  }
+  .hero {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #f4f4f4;
+    padding: 0.5rem;
+    margin-top: 60px;
+    background-image: url(images/hero-section.jpeg);
+    background-size: cover;
+    background-position: center;
+    color:#ccc;
+    overflow: hidden;
+    background-repeat: no-repeat;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    
+  }
+  .projects h2 {
+    font-size: 2rem;
+  }
 
-.scroll-button:hover {
-  opacity: 1;
-  background-color: #555;
-}
+  .project-grid {
+    gap: 10px;
+    padding: 10px 0;
+  }
 
-/* Left Button */
-.scroll-button.left {
-  left: 10px;
-}
+  .hero h1 {
+    font-size: 2rem;
+  }
 
-/* Right Button */
-.scroll-button.right {
-  right: 10px;
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .service-card {
+    width: 90%; /* full width on mobile */
+  }
+
+  .ceo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ceo img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  #contact-form {
+    width: 90%;
+  }
+
+
+  .menu-toggle {
+    display: block; /* Show hamburger on mobile */
+  }
+
+  nav ul {
+    flex-direction: column;
+    background: #2e3192;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  nav ul.show {
+    display: flex; /* Show when active */
+  }
+
+  nav ul li {
+    margin: 1rem 0;
+  }
 }
