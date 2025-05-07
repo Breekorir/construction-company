@@ -1,20 +1,27 @@
 const express = require("express");
 const mysql = require("mysql2");
 const nodemailer = require("nodemailer");
+const path = require("path");
+require("dotenv").config();
+
 const app = express();
 const PORT = 5000;
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Database connection
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "constructions_db"
+  database: "construction_db"
 });
 
+
+// Connect to DB
 db.connect(err => {
   if (err) {
     console.error("DB connection error:", err);
@@ -23,6 +30,12 @@ db.connect(err => {
   console.log("Connected to MySQL");
 });
 
+// Serve homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Contact form API
 app.post("/api/contact", (req, res) => {
   const { name, email, message } = req.body;
 
@@ -30,7 +43,6 @@ app.post("/api/contact", (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // Save to DB
   const sql = "INSERT INTO contacts (name, email, message, created_at) VALUES (?, ?, ?, NOW())";
   db.query(sql, [name, email, message], (err, result) => {
     if (err) {
@@ -38,7 +50,7 @@ app.post("/api/contact", (req, res) => {
       return res.status(500).json({ message: "Database error" });
     }
 
-    // Send email using Nodemailer
+    // Send email notification/ Send email using Nodemailer
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -48,8 +60,8 @@ app.post("/api/contact", (req, res) => {
     });
 
     const mailOptions = {
-      from: "yourgmail@gmail.com",
-      to: "violetlamai521@gmail.com", // ✅ site owner's email
+      from: process.env.EMAIL_USER,
+      to: "laxiconebuilders@gmail.com", // Receiver
       subject: "New Contact Message",
       text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
     };
@@ -66,6 +78,7 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

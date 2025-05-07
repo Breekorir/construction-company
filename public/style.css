@@ -5,68 +5,95 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   line-height: 1.6;
-  padding: 0;
-  overflow-x: hidden;
+  padding-top: 80px; /* space for fixed header */
 }
 
-header {
-  background:#2e3192;
-  color: #fff;
-  padding: 0.1rem 0;
+.header {
   position: fixed;
-  width: 100%;
   top: 0;
+  left: 0;
+  width: 100%;
+  background-color:#2e3192;
+  color: white;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-.logo {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
-}
-.logo img{
-  width:100px;
-  height: 100px;
-  margin-right: 10px;
-}
-nav {
+
+.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  margin: auto;
+  padding: 15px 20px;
 }
-.menu-toggle {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: #fff;
+.logo img {
+  height: 60px;
+  width: auto;
 }
 
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
 
 nav ul {
   display: flex;
+  gap: 20px;
   list-style: none;
 }
 
-nav ul li {
-  margin-left: 2rem;
-}
-
 nav ul li a {
-  color: #fff;
+  color: white;
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #f4b400;
+  color: #00bcd4;
+}
+
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+ 
+  nav ul {
+    flex-direction: column;
+    background: #2e3192;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    height: 300px;
+    width: 300px;
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  #menu-toggle {
+    display: block;
+    margin-left: auto ;
+  }
+}
+
+.section {
+  height: 100vh;
+  padding: 20px;
+}
+
+.section.alt {
+  background: #eee;
 }
 
 .hero {
@@ -106,13 +133,16 @@ nav ul li a:hover {
 }
 
 .hero h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
+  font-weight: bold;
   margin-bottom: 1rem;
+  color: #285AEB;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
+ 
 }
 
 .hero-image {
@@ -150,7 +180,10 @@ nav ul li a:hover {
   justify-content: space-evenly;
   align-items: center;
   margin-bottom: 2rem;
-
+padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
 }
 .services {
@@ -186,9 +219,8 @@ nav ul li a:hover {
 }
 
 .ceo img{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 200px;
+  height: 200px;
   margin-right: 10px;
 }
 .service-card {
@@ -255,65 +287,102 @@ nav ul li a:hover {
 #contact-form button:hover {
   background: #d89e00;
 }.footer {
-  background: #222;
-  color: #eee;
-  padding: 40px 20px 20px;
-  font-family: 'Segoe UI', sans-serif;
+  background-color:#2e3192;
+  color: #ffffff;
+  padding: 40px 20px;
+  font-size: 14px;
 }
 
-.footer-content {
+.footer-container {
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 20px;
-  max-width: 1200px;
-  margin: auto;
+  gap: 10px;
 }
 
 .footer-section {
-  flex: 1 1 250px;
-  min-width: 250px;
+  flex: 1 1 200px;
+  min-width: 200px;
 }
 
 .footer-section h3,
 .footer-section h4 {
-  color: #fff;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
-.footer-section p,
-.footer-section li,
 .footer-section a {
-  font-size: 14px;
+  display: block;
   color: #ccc;
   text-decoration: none;
+  margin-bottom: 8px;
 }
 
 .footer-section a:hover {
-  color: #f4c542;
+  color: #ffffff;
+  text-decoration: underline;
 }
 
-.social-links a {
-  display: block;
-  margin: 5px 0;
+.social-icons a {
+  display: inline-block;
+  margin-right: 10px;
+  color: #ccc;
 }
 
-.footer-bottom {
-  text-align: center;
-  padding: 15px;
-  border-top: 1px solid #444;
-  margin-top: 20px;
-  font-size: 13px;
+.social-icons a:hover {
+  color: #fff;
 }
+/* Social Media Icon Colors */
+.social-icons a {
+  font-size: 20px;
+  margin-right: 12px;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+}
+
+/* Specific platform colors */
+.social-icons a[href*="facebook.com"] {
+  background-color: #3b5998;
+}
+
+.social-icons a[href*="instagram.com"] {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.social-icons a[href*="linkedin.com"] {
+  background-color: #0077b5;
+}
+
+.social-icons a[href*="twitter.com"] {
+  background-color: #1da1f2;
+}
+
+.social-icons a[href*="youtube.com"] {
+  background-color: #ff0000;
+}
+
 
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  .footer-section {
-    text-align: center;
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px 10px; /* reduce vertical padding */
+    }
+  
+    .footer-container {
+      gap: 5px; /* reduce spacing between sections */
+    }
+  
+    .footer-section {
+      margin-bottom: 10px; /* reduce vertical margin */
+    }
   }
 }
 
@@ -384,16 +453,7 @@ nav ul li a:hover {
 }
 /* --- MOBILE VIEW --- */
 @media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    background: #2e3192;
-    position: absolute;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    display: none;
-  }
-
+  
   .project-card {
     min-width: 250px; /* smaller card width for mobile */
   }
@@ -459,17 +519,6 @@ nav ul li a:hover {
     display: block; /* Show hamburger on mobile */
   }
 
-  nav ul {
-    flex-direction: column;
-    background: #2e3192;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: none; /* Hidden by default */
-    text-align: center;
-    padding: 1rem 0;
-  }
 
   nav ul.show {
     display: flex; /* Show when active */

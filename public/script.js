@@ -1,31 +1,19 @@
 // Smooth scrolling for navigation links
-document.querySelectorAll('a').forEach(anchor => {
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
         window.scrollTo({
-            top: targetElement.offsetTop - 60,
-            behavior: 'smooth'
+          top: targetElement.offsetTop - 60,
+          behavior: 'smooth'
         });
+      }
     });
-});
-
-
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('nav ul li a').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        window.scrollTo({
-            top: targetElement.offsetTop - 60,
-            behavior: 'smooth'
-        });
-    });
-});
-
+  });
+  
 // 
     // Load unemployment stats dynamically
 
@@ -48,13 +36,14 @@ scrollRightBtn.addEventListener('click', () => {
     });
 });
 
-
-const menuToggle = document.getElementById('menu-toggle');
+const toggleBtn = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
 
-menuToggle.addEventListener('click', () => {
+toggleBtn.addEventListener('click', () => {
   navLinks.classList.toggle('show');
-});document.addEventListener("DOMContentLoaded", function () {
+});
+
+;document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("contactForm").addEventListener("submit", async function (e) {
       e.preventDefault();
   
