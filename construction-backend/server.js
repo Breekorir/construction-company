@@ -2,7 +2,18 @@ const express = require("express");
 const mysql = require("mysql2");
 const nodemailer = require("nodemailer");
 const path = require("path");
-require("dotenv").config();
+const fs = require("fs"); // For checking .env file
+const dotenv = require("dotenv");
+
+// Explicitly load environment variables from .env file
+const envPath = path.resolve(__dirname, ".env");
+const result = dotenv.config({ path: envPath });
+
+// Throw error if critical variables are missing
+if (!process.env.HOST || !process.env.SENDER || !process.env.PASSWORD) {
+  console.error("Error: Missing required environment variables (HOST, SENDER, PASSWORD)");
+  process.exit(1);
+}
 
 const app = express();
 const PORT = 5000;
@@ -16,18 +27,28 @@ app.use(express.static("public"));
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "construction_db"
+  password: "", // Update with your MySQL password if required
+  database: "construction_db",
 });
 
-
 // Connect to DB
-db.connect(err => {
+db.connect((err) => {
   if (err) {
     console.error("DB connection error:", err);
     return;
   }
   console.log("Connected to MySQL");
+});
+
+// Nodemailer transporter configuration
+const transporter = nodemailer.createTransport({
+  host: process.env.HOST || "smtp.gmail.com", // Fallback to smtp.gmail.com
+  port: process.env.PORT ? parseInt(process.env.PORT) : 465,
+  secure: true, // Use SSL/TLS for port 465
+  auth: {
+    user: process.env.SENDER,
+    pass: process.env.PASSWORD,
+  },
 });
 
 // Serve homepage
@@ -50,30 +71,21 @@ app.post("/api/contact", (req, res) => {
       return res.status(500).json({ message: "Database error" });
     }
 
-    // Send email notification/ Send email using Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "brigidkorir4@gmail.com",     // ✅ your Gmail
-        pass: "mfno urmw rrka qydd"   // ✅ the 16-char app password
-      }
-    });
-
+    // Send email notification using Nodemailer
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: "laxiconebuilders@gmail.com", // Receiver
+      from: process.env.SENDER,
+      to: "kiptooemmanuel072@gmail.com", // Receiver
       subject: "New Contact Message",
-      text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
+      text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`,
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.error("Email error:", err);
         return res.status(500).json({ message: "Message saved, but failed to send email" });
-      } else {
-        console.log("Email sent:", info.response);
-        res.json({ message: "Message saved and email sent!" });
       }
+      console.log("Email sent:", info.response);
+      res.json({ message: "Message saved and email sent!" });
     });
   });
 });
